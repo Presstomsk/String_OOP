@@ -1,4 +1,5 @@
-﻿#include <iostream>
+﻿#pragma warning(disable:4326)
+#include <iostream>
 using namespace std;
 using std::cin;
 using std::cout;
@@ -7,80 +8,100 @@ using std::endl;
 class String;
 String operator+(const String& left, const String& right);
 
+////////// CLASS DECLARATION /////////////////////////////
+
 class String
 {
 	int size;
 	char* str;
 public:
-	int get_size() const
-	{
-		return size;
-	}
-	const char* get_str() const
-	{
-		return str;
-	}
-	char* get_str() 
-	{
-		return str;
-	}
+	int get_size() const;
+	const char* get_str() const;
+	char* get_str();
 	/*_________________*/
-	explicit String(int size = 80) :size(size), str(new char[size] {})
-	{
-		//this->size = size;
-		//this->str = new char[size] {};
-		cout << (size == 80 ? "Default" : "Size") << "Constructor:\t" << this << endl;
-	}
-	String(const char str[]):String(strlen(str)+1)
-	{
-		//this->size = strlen(str) + 1;
-		//this->str = new char[size] {};
-		for (int i = 0; str[i]; i++)
-		{
-			this->str[i] = str[i];
-		}
-		cout << "Constructor:\t\t" << this << endl;
-	}
-	String(const String& other):String(other.str)
-	{
-		/*this->size = other.size;
-		this->str = new char[size] {};
-		for (int i = 0; i < size; i++) this->str[i] = other.str[i];*/
-		cout << "CopyConstructor:\t" << this << endl;
-	}
-	String(String&& other)
-	{
-		this->size = other.size;
-		this->str = other.str;
-		other.str = nullptr;
-		cout << "MoveConstructor:\t" << this << endl;
-
-	}
-	~String()
-	{
-		delete[] this->str;
-		cout << "Destructor:\t" << this << endl;
-	}
-	String& operator=(const String& other)
-	{
-		if (this == &other)return *this;
-		delete[] this->str;
-		this->size = other.size;
-		this->str = new char[size] {};
-		for (int i = 0; i < size; i++) this->str[i] = other.str[i];
-		cout << "CopyAssignment:\t" << this << endl;
-		return *this;
-	}
-	String& operator+=(const String& other)
-	{	
-		return (*this = *this + other);
-	}
-	void Print() const
-	{
-		cout << "Size:\t" << size << endl;
-		cout << "str:\t" << str << endl;
-	}
+	explicit String(int size = 80);
+	String(const char str[]);
+	String(const String& other);
+	String(String&& other)noexcept;
+	~String();
+	String& operator=(const String& other);
+	String& operator+=(const String& other);
+	void Print() const;
 };
+
+
+///////// CLASS DECLARATION END ////////////
+
+///////// CLASS DEFINITION ////////////////////
+
+int String::get_size() const
+{
+	return size;
+}
+const char* String::get_str() const
+{
+	return str;
+}
+char* String::get_str()
+{
+	return str;
+}
+/*_________________*/
+String::String(int size) :size(size), str(new char[size] {})
+{
+	//this->size = size;
+	//this->str = new char[size] {};
+	cout << (size == 80 ? "Default" : "Size") << "Constructor:\t" << this << endl;
+}
+String::String(const char str[]) :String(strlen(str) + 1)
+{
+	//this->size = strlen(str) + 1;
+	//this->str = new char[size] {};
+	for (int i = 0; str[i]; i++)
+	{
+		this->str[i] = str[i];
+	}
+	cout << "Constructor:\t\t" << this << endl;
+}
+String::String(const String& other) :String(other.str)
+{
+	/*this->size = other.size;
+	this->str = new char[size] {};
+	for (int i = 0; i < size; i++) this->str[i] = other.str[i];*/
+	cout << "CopyConstructor:\t" << this << endl;
+}
+String::String(String&& other)noexcept :size(other.size), str(other.str)
+{
+	/*this->size = other.size;
+	this->str = other.str;*/
+	other.str = nullptr;
+	cout << "MoveConstructor:\t" << this << endl;
+
+}
+String::~String()
+{
+	delete[] this->str;
+	cout << "Destructor:\t" << this << endl;
+}
+String& String::operator=(const String& other)
+{
+	if (this == &other)return *this;
+	delete[] this->str;
+	this->size = other.size;
+	this->str = new char[size] {};
+	for (int i = 0; i < size; i++) this->str[i] = other.str[i];
+	cout << "CopyAssignment:\t" << this << endl;
+	return *this;
+}
+String& String::operator+=(const String& other)
+{
+	return (*this = *this + other);
+}
+void String::Print() const
+{
+	cout << "Size:\t" << size << endl;
+	cout << "str:\t" << str << endl;
+}
 ostream& operator<<(ostream& os, const String& obj)
 {
 	return os << obj.get_str();
@@ -96,6 +117,7 @@ String operator+(const String& left, const String& right)
 
 }
 
+/////////// CLASS DEFINITION END /////////////////////////////////
 
 //#define CONSTRUCTORS_CHECK
 //#define ASSIGNMENT_CHECK
