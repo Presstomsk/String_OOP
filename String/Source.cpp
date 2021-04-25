@@ -97,6 +97,10 @@ public:
 		cout << "Size:\t" << size << endl;
 		cout << "str:\t" << str << endl;
 	}
+	char operator[](const int i) const
+	{
+		return this->get_str()[i];
+	}
 };
 ostream& operator<<(ostream& os, const String& obj)
 {
@@ -111,6 +115,23 @@ String operator+(const String& left, const String& right)
 		result.get_str()[i+left.get_size()-1] = right.get_str()[i];
 	return result;
 
+}
+bool operator==(const String& left, const String& right)
+{
+	if (left.get_size() != right.get_size()) return false;
+	else
+	{
+		for (int i = 0; i < left.get_size(); i++)
+		{
+			if (left[i] != right[i]) return false;
+		}
+	}
+
+	return true;
+}
+bool operator!=(const String& left, const String& right)
+{
+	return !(left == right);
 }
 
 
@@ -145,5 +166,12 @@ void main()
 	cout << str3 << endl;
 	/*str1 += str2;
 	cout << str1 << endl;*/
-	String str4 = "c";
+	String str4;
+	str4 = str1 + str2;
+	cout << str4 << endl;
+	cout << str3[4] << endl;
+	str2 = str1;
+	cout << (str1 == str2) << endl;
+	cout << (str1 != str2) << endl;
+	
 }
