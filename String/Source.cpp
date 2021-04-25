@@ -48,7 +48,7 @@ public:
 		for (int i = 0; i < size; i++) this->str[i] = other.str[i];*/
 		cout << "CopyConstructor:\t" << this << endl;
 	}
-	String(String&& other)
+	String(String&& other) noexcept
 	{
 		this->size = other.size;
 		this->str = other.str;
