@@ -39,6 +39,14 @@ public:
 		{
 			this->str[i] = str[i];
 		}
+		cout << "Constructor1:\t" << this << endl;
+	}
+	String(const char str)
+	{
+		this->size = 2;
+		this->str = new char[size] {};
+		this->str[0] = str;
+		cout << "Constructor2:\t" << this << endl;
 	}
 	String(const String& other)
 	{
@@ -119,4 +127,5 @@ void main()
 	cout << str3 << endl;
 	/*str1 += str2;
 	cout << str1 << endl;*/
+	String str4 = "c";
 }
