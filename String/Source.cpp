@@ -78,6 +78,7 @@ public:
 		cout << "CopyAssignment:\t" << this << endl;
 		return *this;
 	}
+
 	String& operator=(String&& other) noexcept
 	{
 		if (this == &other)return *this;
@@ -173,5 +174,8 @@ void main()
 	str2 = str1;
 	cout << (str1 == str2) << endl;
 	cout << (str1 != str2) << endl;
-	
+	String str5 = str3[4];
+	cout << str5 << endl;
+	str2 = str3[4];
+	cout << str2 << endl;
 }
